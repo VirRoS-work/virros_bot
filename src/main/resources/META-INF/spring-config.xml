@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:5432/VIrrosBotDB"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="demite56"/>
+    </bean>
+
+    <bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect"/>
+
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="database" value="POSTGRESQL"/>
+        <property name="databasePlatform" value="org.hibernate.dialect.PostgreSQL9Dialect"/>
+    </bean>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
+        <property name="persistenceUnitName" value="developer.remarks.persistence.unit"/>
+        <property name="jpaDialect" ref="jpaDialect"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaDialect" ref="jpaDialect"/>
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <tx:annotation-driven proxy-target-class="true" transaction-manager="transactionManager"/>
+
+    <context:component-scan base-package="base.model"/>
+    <context:component-scan base-package="base.dao"/>
+    <context:component-scan base-package="base.service"/>
+
+    <bean id="BuyService" class="base.service.BuyService"/>
+
+    <bean id="ControllerCommands" class="bot.logic.command.ControllerCommands">
+        <property name="commands">
+            <list>
+                <bean class="bot.logic.command.CommandStart"/>
+                <bean class="bot.logic.command.CommandCommands"/>
+            </list>
+        </property>
+    </bean>
+    
+    <bean id="CommandCommands" class="bot.logic.command.CommandCommands">
+        <property name="controllerCommands" ref="ControllerCommands"/>
+    </bean>
+
+    <bean id="VirrosBot" class="bot.VirrosBot">
+        <property name="controllerCommands" ref="ControllerCommands"/>
+    </bean>
+</beans>
