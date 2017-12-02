@@ -20,6 +20,9 @@ public class Buy {
     @Column(name = "count")
     private String count_product;
 
+    @Column(name = "measurement")
+    private String measurement_product;
+
     public int getId() {
         return id;
     }
@@ -52,6 +55,14 @@ public class Buy {
         this.count_product = count_product;
     }
 
+    public String getMeasurement_product() {
+        return measurement_product;
+    }
+
+    public void setMeasurement_product(String measurement_product) {
+        this.measurement_product = measurement_product;
+    }
+
     @Override
     public String toString() {
         return "Buy{" +
@@ -59,6 +70,7 @@ public class Buy {
                 ", chat_id=" + chat_id +
                 ", name_product='" + name_product + '\'' +
                 ", count_product='" + count_product + '\'' +
+                ", measurement_product='" + measurement_product + '\'' +
                 '}';
     }
 }
