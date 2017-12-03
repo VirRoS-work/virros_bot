@@ -62,7 +62,7 @@ public class CommandBuy implements Command {
                 int count = 1;
 
                 for (Buy buy : buys) {
-                    products.append(count++ + " - " + buy.getName_product() + " " + buy.getCount_product() + " " + buy.getMeasurement_product());
+                    products.append(count++ + " - " + buy.getName_product() + " " + buy.getCount_product() + " " + buy.getMeasurement_product() + "\n");
                 }
 
                 return new SendMessage()

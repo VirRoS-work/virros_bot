@@ -49,6 +49,7 @@
                 <bean class="bot.logic.command.CommandStart"/>
                 <bean class="bot.logic.command.CommandCommands"/>
                 <bean class="bot.logic.command.CommandBuy"/>
+                <bean class="bot.logic.command.CommandBought"/>
             </list>
         </property>
     </bean>
@@ -57,9 +58,8 @@
         <property name="controllerCommands" ref="ControllerCommands"/>
     </bean>
 
-    <bean id="CommandBuy" class="bot.logic.command.CommandBuy">
-        <property name="stringHelper" ref="StringHelper"/>
-    </bean>
+    <bean id="CommandBuy" class="bot.logic.command.CommandBuy"/>
+    <bean id="CommandBougth" class="bot.logic.command.CommandBought"/>
 
     <bean id="VirrosBot" class="bot.VirrosBot">
         <property name="controllerCommands" ref="ControllerCommands"/>

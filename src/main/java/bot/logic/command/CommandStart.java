@@ -11,7 +11,8 @@ public class CommandStart implements Command {
     public SendMessage execute(Update update) {
         return new SendMessage()
                 .setChatId(update.getMessage().getChatId())
-                .setText("Здравствуй, " + update.getMessage().getFrom().getFirstName() + "!");
+                .setText("Здравствуй, " + update.getMessage().getFrom().getFirstName() + "! Познакомиться с моими " +
+                        "возможностями Вы можете по команде /commands =)");
     }
 
     @Override
